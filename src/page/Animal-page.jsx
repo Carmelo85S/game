@@ -25,8 +25,17 @@ const AnimalPage = ({
   cookie, setCookie, 
   beer, setBeer, 
   wine, setWine }) => {
-    const [hunger, setHunger] = useState(50);
-    const [thirst, setThirst] = useState(50);
+    
+    const [hunger, setHunger] = useState(() => {
+      const storedHunger = localStorage.getItem('hunger');
+      return storedHunger ? parseInt(storedHunger, 10) : 50;
+    });
+    
+    const [thirst, setThirst] = useState(() => {
+      const storedThirst = localStorage.getItem('thirst');
+      return storedThirst ? parseInt(storedThirst, 10) : 50;
+    });
+    
     const [isGameOver, setIsGameOver] = useState(false);
     const [visible, setVisible] = useState(null);
     const [playFartSound] = useSound(Fart);
@@ -81,14 +90,33 @@ const useWine = () => {
   useConsumableItem(thirst, setThirst, "Wine", wine, setWine, Wine, setVisible);
 };
 
+useEffect(() => {
+  localStorage.setItem('hunger', hunger.toString());
+  localStorage.setItem('thirst', thirst.toString());
+}, [hunger, thirst]);
+
+useEffect(() => {
+  const storedHunger = localStorage.getItem('hunger');
+  const storedThirst = localStorage.getItem('thirst');
+
+  if (storedHunger && !isNaN(storedHunger)) {
+    setHunger(parseInt(storedHunger, 10));
+  }
+
+  if (storedThirst && !isNaN(storedThirst)) {
+    setThirst(parseInt(storedThirst, 10));
+  }
+}, []);
+
 
 // Hunger Decrement
 useEffect(() => {
   if (hunger <= 0) {
     setIsGameOver(true);
+    playFartSound();
   } else {
     const hungerInterval = setInterval(() => {
-      setHunger((prevHunger) => Math.max(prevHunger - 10, 0)); // Evita valori negativi
+      setHunger((prevHunger) => Math.max(prevHunger - 10, 0));
     }, 7500);
 
     return () => clearInterval(hungerInterval);
@@ -99,9 +127,10 @@ useEffect(() => {
 useEffect(() => {
   if (thirst <= 0) {
     setIsGameOver(true);
+    playFartSound();
   } else {
     const thirstInterval = setInterval(() => {
-      setThirst((prevThirst) => Math.max(prevThirst - 10, 0)); // Evita valori negativi
+      setThirst((prevThirst) => Math.max(prevThirst - 10, 0));
     }, 10000);
 
     return () => clearInterval(thirstInterval);
