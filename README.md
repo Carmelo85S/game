@@ -1,8 +1,11 @@
-# React + Vite
+This is a game created as Final Project for a Fron End course:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The game is called "Virtual Pet" and it'is inspired by the most famous tamagotchi.
+The idea behind the game was to create something that can be helpull in the development for a child. In the game the user needs to take care of a pet, feed him and clean.
+In teh game there are 3 ways to gain ponts' in the play section the user will find 2 mini games, math and quiz.
+With the points gained the user can buy food and drinks for the cats.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+
